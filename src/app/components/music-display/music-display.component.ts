@@ -26,40 +26,26 @@ export class MusicDisplayComponent implements OnInit,  AfterViewInit  {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
 
-  ngAfterViewInit(): void {
-    console.log("ngAfterViewInit() start..")
-    setTimeout(()=>{
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      console.log("set paginator complete..")
-    }, 300);
-    console.log("ngAfterViewInit() complete..")
-  }
-
   ngOnInit(): void {
-    console.log("ngOnInit() ..")
-    this.musicService.getArtists().subscribe(response => this.handleArtistsResponse(response));
-    this.musicService.getAlbums().subscribe(response => this.handleAlbumsResponse(response));
+    this.musicService.getArtists().subscribe(response => {
+      this.artists = response
+    });
+    this.musicService.getAlbums().subscribe(response => {
+      this.albums = response;
+    });
+  }
+  ngAfterViewInit(): void {
     this.musicService.getSongs().subscribe(
-      response => this.handleSongsResponse(response),
-      err => console.error('error: ' + err),
-      () => console.log('getSongs - completed')
+      response => {
+        this.songs = response;
+        this.flattenLists();
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        console.log("set paginator and sort complete..");
+      }
     );
   }
-  handleArtistsResponse(response){
-    this.artists = response;
-    console.log("artists: " , this.artists);
-  }
-  handleAlbumsResponse(response){
-    this.albums = response;
-    console.log("albums: " , this.albums);
-  }
-  handleSongsResponse(response){
-    this.songs = response;
-    console.log("songs: " , this.songs);
-    this.flattenLists();
-  }
-  flattenLists() {
+  private flattenLists() {
     this.songs.map(song=>{
       let album: Album = this.getAlbum(song.album_id);
       let artist: Artist = this.getArtist(album.artist_id);
@@ -75,7 +61,6 @@ export class MusicDisplayComponent implements OnInit,  AfterViewInit  {
       })
     });
     console.log("flatlist: ", this.flatList);
-    console.log("flatlist items: ", this.flatList.length);
   }
   private getAlbum(album_id: number): Album {
     return this.albums.find(album=>album.id==album_id);

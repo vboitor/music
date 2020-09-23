@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Song } from '../models/songs';
 import { Album } from '../models/albums';
 import { Artist } from '../models/artists';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -23,14 +24,14 @@ export class MusicService {
     this.httpOptions = {headers: this.reqHeader};
   }
 
-  public getSongs(){
-    return this.httpClient.get<Song>(`${this.apiURL}/songs`, this.httpOptions);
+  public getSongs(): Observable<Song[]>{
+    return this.httpClient.get<Song[]>(`${this.apiURL}/songs`, this.httpOptions);
   }
-  public getAlbums(){
-    return this.httpClient.get<Album>(`${this.apiURL}/albums`, this.httpOptions);
+  public getAlbums(): Observable<Album[]>{
+    return this.httpClient.get<Album[]>(`${this.apiURL}/albums`, this.httpOptions);
   }
-  public getArtists(){
-    return this.httpClient.get<Artist>(`${this.apiURL}/artists`, this.httpOptions);
+  public getArtists(): Observable<Artist[]>{
+    return this.httpClient.get<Artist[]>(`${this.apiURL}/artists`, this.httpOptions);
 
   }
 }
