@@ -5,13 +5,13 @@
     <!-- Artist Name Column -->
     <ng-container matColumnDef="artist_name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Artist Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.artist_name}} </td>
+      <td class="w-150" mat-cell *matCellDef="let element"> {{element.artist_name}} </td>
     </ng-container>
 
     <!-- Album Name Column -->
     <ng-container matColumnDef="album_name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Album Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.album_name}} </td>
+      <td class="w-200" mat-cell *matCellDef="let element"> {{element.album_name}} </td>
     </ng-container>
 
     <!-- Year Released Column -->
@@ -29,7 +29,7 @@
     <!-- Song Name Column -->
     <ng-container matColumnDef="song_name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Song Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.song_name}} </td>
+      <td class="w-350" mat-cell *matCellDef="let element"> {{element.song_name}} </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
