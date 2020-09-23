@@ -1,6 +1,8 @@
 # Music
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.5.
+## Screenshot
+![Alt text](/screenshot.png?raw=true "Music App")
 
 ## Development server
 
