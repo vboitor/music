@@ -26,18 +26,14 @@ export class MusicDisplayComponent implements OnInit,  AfterViewInit  {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
 
-  ngOnInit(): void {
-    this.musicService.getArtists().subscribe(response => {
-      this.artists = response
-    });
-    this.musicService.getAlbums().subscribe(response => {
-      this.albums = response;
-    });
-  }
+  ngOnInit(): void { }
+
   ngAfterViewInit(): void {
-    this.musicService.getSongs().subscribe(
-      response => {
-        this.songs = response;
+    this.musicService.getAllData().subscribe(
+      responseList => {
+        this.artists = responseList[0] as Artist[];
+        this.albums = responseList[1] as Album[];
+        this.songs = responseList[2] as Song[];
         this.flattenLists();
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;

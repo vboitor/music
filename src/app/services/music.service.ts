@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Song } from '../models/songs';
 import { Album } from '../models/albums';
 import { Artist } from '../models/artists';
-import { Observable } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +32,11 @@ export class MusicService {
   }
   public getArtists(): Observable<Artist[]>{
     return this.httpClient.get<Artist[]>(`${this.apiURL}/artists`, this.httpOptions);
-
+  }
+  public getAllData(): Observable<any[]> {
+    let artists = this.getArtists();
+    let albums = this.getAlbums();
+    let songs = this.getSongs();
+    return forkJoin([artists, albums, songs]);
   }
 }
